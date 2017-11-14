@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('collaborators')"></head>
+<body>
+<div th:replace="layout :: header"></div>
+<div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Projects</a></li>
+            <li class="selected"><a href="collaborators.html">Collaborators</a></li>
+            <li><a href="roles.html">Roles</a></li>
+        </ul>
+    </nav>
+</div>
+<div th:replace="layout :: flash"></div>
+<section>
+    <div class="container wrapper">
+
+        <form th:action="${action}" th:object="${collaborator}" method="post">
+            <h2 style="display:inline">Manage Collaborators</h2>
+            <ul class="checkbox-list roles-collaborators">
+                <li th:each="colab: ${collaborators}">
+                    <a class="primary"
+                       th:href="@{'/collaborators/' + ${colab.id} + '/edit'}"
+                       th:text="${colab.name}">Michael Pemulius</a>
+                    <div th:text="${colab.role.roleName}"></div>
+                </li>
+            </ul>
+            <div class="actions add-new-collaborator">
+                <input type="text" th:field="*{name}" placeholder="Name"/>
+                <input type="hidden" th:field="*{id}"/>
+                <div class="custom-select">
+                    <span class="dropdown-arrow"></span>
+                    <select th:field="*{role}">
+                        <option th:each="role : ${roles}" th:value="${role.id}"
+                                th:text="${role.roleName}">
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="button">Add</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

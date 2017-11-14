@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('projects')"></head>
+<body>
+<div th:replace="layout :: header"></div>
+<div>
+    <nav>
+        <ul>
+            <li class="selected"><a href="index.html">Projects</a></li>
+            <li><a href="collaborators.html">Collaborators</a></li>
+            <li><a href="roles.html">Roles</a></li>
+        </ul>
+    </nav>
+</div>
+<div th:replace="layout :: flash"></div>
+
+<section>
+    <div class="container wrapper">
+        <div class="project-list">
+            <div class="project" th:each="project : *{projects}">
+                <h2><a th:href="@{'projects/' + ${project.id}}" th:text="${project.projectName}">Project Name</a></h2>
+                <p th:text="${project.projectDescription}">Project description</p>
+                <p th:text="${#dates.format(project.dateCreated, 'dd-MM-yyyy hh:mm:ss')}"></p>
+                <span th:class="'tag ' + ${#strings.toLowerCase(project.projectStatus)}  " th:text="${project.projectStatus}">Project status</span>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

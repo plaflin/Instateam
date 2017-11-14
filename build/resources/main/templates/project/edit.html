@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('edit project')"></head>
+<body>
+<div th:replace="layout :: header"></div>
+<div>
+    <nav>
+        <ul>
+            <li class="selected"><a href="index.html">Projects</a></li>
+            <li><a href="collaborators.html">Collaborators</a></li>
+            <li><a href="roles.html">Roles</a></li>
+        </ul>
+    </nav>
+</div>
+<div th:replace="layout :: flash"></div>
+<section>
+    <div class="container wrapper">
+        <form th:action="${action}" method="post" th:object="${project}">
+            <div>
+                <label> Project Name:</label>
+                <input type="text" th:field="*{projectName}"/>
+                <div class="error-message" th:if="${#fields.hasErrors ('projectName')}" th:errors="*{projectName}"></div>
+            </div>
+            <div>
+                <label>Project Description:</label>
+                <textarea rows="4" th:field="*{projectDescription}" name="project_description"></textarea>
+                <div class="error-message" th:if="${#fields.hasErrors ('projectDescription')}" th:errors="*{projectDescription}"></div>
+            </div>
+            <div>
+                <label>Project Status:</label>
+                <div class="custom-select">
+                    <span class="dropdown-arrow"></span>
+                    <select th:field="*{projectStatus}" name="project_status">
+                        <option th:classappend="${#strings.toLowerCase(project.projectStatus)}" value="active">Active</option>
+                        <option th:classappend="${#strings.toLowerCase(project.projectStatus)}" value="archived">Archived</option>
+                        <option th:classappend="${#strings.toLowerCase(project.projectStatus)}" value="not_started">Not Started</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label>Project Roles:</label>
+                <ul class="checkbox-list" th:each="role : ${roles}">
+                    <li >
+                        <input type="checkbox"
+                               th:field="*{rolesNeeded}"
+                               th:value="${role.id}"/>
+                        <span class="primary" th:text="${role.roleName}"> Developer</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="actions">
+                <input type="submit" th:value="${button}" class="button"/>
+                <a th:href="${cancel}" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
