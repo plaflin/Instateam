@@ -39,7 +39,7 @@ public class CollaboratorController {
         model.addAttribute("action", "/collaborators");
         model.addAttribute("collaborator", new Collaborator());
 
-        return "collaborator/index";
+        return "collaborator/collaborators";
     }
 
     // Function handles the route and operation to add a new collaborator
